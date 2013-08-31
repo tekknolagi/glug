@@ -1,28 +1,37 @@
 <style>
-body {
-    margin:0;
-    padding:0;
-}
-.date {
-    font-size: 9px;
-    color: #3D352A;
+  body {
+  margin:0;
+  padding:0;
+  }
+  .date {
+  font-size: 9px;
+  color: #3D352A;
   }
 </style>
 
 <body>
-  <form method="POST" action="/new">
+  <form method="POST" action="/new" enctype="multipart/form-data">
     Post:<br />
     <input type="text" name="post" />
     <br />
     Comment: <br />
     <input type="text" name="comment" />
     <br />
+    Image (optional): <br />
+    <input type="file" name="image" />
+    <br />
     <input type="submit" value="Post" />
   </form>
 
   <% Post.all(:limit => 10).reverse.each do |post| %>
   <table border="1" width="500px">
-    <tr><td><h2><a href="/p/<%= post.uid %>"><%=h post.title %></h2></a></td></tr>
+    <tr><td><h2><a href="/p/<%= post.uid %>"><%=h post.title %></a></h2>
+
+	<% if post.image %>
+	<br /><img src="/i/<%= post.image.uid %>" width="150"/>
+	<% end %>
+
+    </td></tr>
     <% post.comments.each do |comment| %>
     <tr><td><span class="date"><%= comment.nicedate %></span><br /><%=h comment.body %></td></tr>
     <% end %>
@@ -31,6 +40,6 @@ body {
       <tr><td><input type="text" width="100%" name="body" /><input type="submit" value="Comment" /></td></tr>
     </form>
   </table>
-  <br>
+  <br />
   <% end %>
 </body>

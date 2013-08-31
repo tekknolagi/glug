@@ -1,23 +1,29 @@
 <style>
-body {
-    margin:0;
-    padding:0;
-}
-.date {
-    font-size: 9px;
-    color: #3D352A;
+  body {
+  margin:0;
+  padding:0;
+  }
+  .date {
+  font-size: 9px;
+  color: #3D352A;
   }
 </style>
 
 <script type="text/javascript">
-    window.onload = function() {
-	document.getElementById("new").focus();
-    };
+  window.onload = function() {
+  document.getElementById("new").focus();
+  };
 </script>
 
 <body>
   <table border="1">
-    <tr><td><h2><%=h @post.title %></h2></td></tr>
+    <tr><td><h2><%=h @post.title %></h2>
+
+	<% if @post.image %>
+	<br /><img src="/i/<%= @post.image.uid %>" width="150"/>
+	<% end %>
+
+    </td></tr>
     <% @post.comments.each do |comment| %>
     <tr><td><span class="date"><%= comment.nicedate %></span><br /><%=h comment.body %></td></tr>
     <% end %>
