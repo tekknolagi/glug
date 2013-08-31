@@ -41,7 +41,7 @@ class Image
 
   property :id, Serial
   property :uid, String, :length => 32, :default => lambda { |r, p| Digest::MD5.hexdigest(r.created_at.to_s+r.file) }
-  property :file, Text
+  property :file, Text, :length => 5000000
   property :type, String
   property :created_at, DateTime, :default => ->(r, p) { DateTime.now }
 
