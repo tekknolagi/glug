@@ -61,7 +61,9 @@ class GulagApp < Sinatra::Application
   end
 
   post '/new' do
-    if bad(params[:title]) or bad(params[:comment])
+    if bad(params[:post]) or bad(params[:comment])
+      puts params[:post]
+      puts params[:comment]
       redirect to(params[:orig] || "/")
     end
     p = Post.create(:title => params[:post])
