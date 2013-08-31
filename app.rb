@@ -57,6 +57,9 @@ class GulagApp < Sinatra::Application
   end
 
   post '/new' do
+    if params[:title] == nil or params[:title] == ""
+      redirect to(params[:orig])
+    end
     p = Post.create(:title => params[:post])
     c = Comment.new(:body => params[:comment])
     p.comments << c
@@ -65,6 +68,9 @@ class GulagApp < Sinatra::Application
   end
 
   post '/p/:uid' do
+    if params[:body] == nil or params[:body] == ""
+      redirect to(params[:orig])
+    end
     @post = Post.first(:uid => params[:uid])
     c = Comment.create(:body => params[:body])
     @post.comments << c
