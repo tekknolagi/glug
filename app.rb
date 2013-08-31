@@ -43,6 +43,14 @@ class GulagApp < Sinatra::Application
     erb :single
   end
 
+  post '/new' do
+    p = Post.create(:title => params[:post])
+    c = Comment.new(:body => params[:comment])
+    p.comments << c
+    c.save
+    redirect to("/p/#{p.uid}")
+  end
+
   post '/p/:uid' do
     @post = Post.first(:uid => params[:uid])
     c = Comment.create(:body => params[:body])
