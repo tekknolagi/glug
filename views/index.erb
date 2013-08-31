@@ -18,13 +18,13 @@
 
   <% Post.all(:limit => 10).reverse.each do |post| %>
   <table border="1" width="500px">
-    <tr><td colspan="2"><h2><a href="/p/<%= post.uid %>"><%= post.title %></h2></a></td></tr>
+    <tr><td><h2><a href="/p/<%= post.uid %>"><%= post.title %></h2></a></td></tr>
     <% post.comments.each do |comment| %>
-    <tr><td><%= comment.body %></td><td><%= comment.created_at %></td></tr>
+    <tr><td><%= comment.body %></br /><%= comment.created_at %></td></tr>
     <% end %>
     <form method="POST" action="/p/<%= post.uid %>">
       <input type="hidden" name="orig" value="<%= @orig %>" />
-      <tr><td><input type="text" width="100%" name="body" /></td><td><input type="submit" value="Comment" /></td></tr>
+      <tr><td><input type="text" width="100%" name="body" /><input type="submit" value="Comment" /></td></tr>
     </form>
   </table>
   <br>
