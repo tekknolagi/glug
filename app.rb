@@ -11,6 +11,10 @@ class Post
   property :title, String
   property :created_at, DateTime, :default => ->(r, p) { DateTime.now }
 
+  def nicedate
+    created_at.strftime("%I:%M%P on %A %B %d, %Y")
+  end
+
   has n, :comments
 end
 
@@ -21,6 +25,10 @@ class Comment
   property :uid, String, :length => 32, :default => lambda { |r, p| Digest::MD5.hexdigest(r.created_at.to_s+r.body) }
   property :body, String
   property :created_at, DateTime, :default => ->(r, p) { DateTime.now }
+
+  def nicedate
+    created_at.strftime("%I:%M%P on %A %B %d, %Y")
+  end
 end
 
 DataMapper.auto_upgrade!

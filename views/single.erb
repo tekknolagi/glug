@@ -1,3 +1,14 @@
+<style>
+body {
+    margin:0;
+    padding:0;
+}
+.date {
+    font-size: 9px;
+    color: #3D352A;
+  }
+</style>
+
 <script type="text/javascript">
     window.onload = function() {
 	document.getElementById("new").focus();
@@ -6,9 +17,9 @@
 
 <body>
   <table border="1">
-    <tr><td><h2><%= @post.title %></h2><br /><%= @post.created_at %></td></tr>
+    <tr><td><h2><%= @post.title %></h2></td></tr>
     <% @post.comments.each do |comment| %>
-    <tr><td><%= comment.body %><br /><%= comment.created_at %></td></tr>
+    <tr><td><span class="date"><%= comment.nicedate %></span><br /><%= comment.body %></td></tr>
     <% end %>
     <form method="POST" action="/p/<%= @post.uid %>">
       <input type="hidden" name="orig" value="<%= @orig %>" />
