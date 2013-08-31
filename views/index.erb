@@ -22,9 +22,9 @@ body {
 
   <% Post.all(:limit => 10).reverse.each do |post| %>
   <table border="1" width="500px">
-    <tr><td><h2><a href="/p/<%= post.uid %>"><%= post.title %></h2></a></td></tr>
+    <tr><td><h2><a href="/p/<%= post.uid %>"><%=h post.title %></h2></a></td></tr>
     <% post.comments.each do |comment| %>
-    <tr><td><span class="date"><%= comment.nicedate %></span><br /><%= comment.body %></td></tr>
+    <tr><td><span class="date"><%= comment.nicedate %></span><br /><%=h comment.body %></td></tr>
     <% end %>
     <form method="POST" action="/p/<%= post.uid %>">
       <input type="hidden" name="orig" value="<%= @orig %>" />

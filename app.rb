@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'data_mapper'
+require 'CGI'
 
 DataMapper.setup(:default, ENV['HEROKU_POSTGRESQL_NAVY_URL'] || ENV['GULAGRB_POSTGRESQL_URL'])
 
@@ -32,6 +33,10 @@ class Comment
 end
 
 DataMapper.auto_upgrade!
+
+def h(html)
+  CGI.escapeHTML html
+end
 
 class GulagApp < Sinatra::Application
   helpers do
