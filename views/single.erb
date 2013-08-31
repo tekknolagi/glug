@@ -1,0 +1,10 @@
+<table border="1">
+<tr><td><h2><%= @post.title %></h2></td><td><%= @post.created_at %></td></tr>
+<% @post.comments.each do |comment| %>
+<tr><td><%= comment.body %></td><td><%= comment.created_at %></td></tr>
+<% end %>
+<form method="POST" action="/p/<%= @post.uid %>">
+<input type="hidden" name="orig" value="<%= @orig %>" />
+<tr><td><input type="text" width="100%" name="body" /></td><td><input type="submit" value="Post" /></td></tr>
+</form>
+</table>
