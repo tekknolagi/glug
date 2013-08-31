@@ -39,7 +39,7 @@ def h(html)
 end
 
 def bad(content)
-  content == nil or content == "" or content.length < 2
+  content == nil or content == "" or content.length < 2 or content =~ /^\s*$/
 end
 
 class GulagApp < Sinatra::Application
