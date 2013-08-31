@@ -1,6 +1,6 @@
 require 'sinatra'
 require 'data_mapper'
-require 'CGI'
+require 'cgi'
 
 DataMapper.setup(:default, ENV['HEROKU_POSTGRESQL_NAVY_URL'] || ENV['GULAGRB_POSTGRESQL_URL'])
 
