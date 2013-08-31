@@ -97,7 +97,6 @@ class GulagApp < Sinatra::Application
     if params[:image] && params[:image][:tempfile]
       @file = true
       b64 = [File.read(params[:image][:tempfile])].pack("m")
-      puts b64
       i = Image.create(:file => b64, :type => params[:image]['Content-Type'])
       puts i
     end
