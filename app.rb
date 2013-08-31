@@ -38,6 +38,10 @@ def h(html)
   CGI.escapeHTML html
 end
 
+def bad(content)
+  content == nil or content == "" or content.length < 2
+end
+
 class GulagApp < Sinatra::Application
   helpers do
     def current_page
@@ -57,7 +61,7 @@ class GulagApp < Sinatra::Application
   end
 
   post '/new' do
-    if params[:title] == nil or params[:title] == ""
+    if bad(params[:title]) or bad(params[:comment])
       redirect to(params[:orig])
     end
     p = Post.create(:title => params[:post])
@@ -68,7 +72,7 @@ class GulagApp < Sinatra::Application
   end
 
   post '/p/:uid' do
-    if params[:body] == nil or params[:body] == ""
+    if bad(params[:body])
       redirect to(params[:orig])
     end
     @post = Post.first(:uid => params[:uid])
