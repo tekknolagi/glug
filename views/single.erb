@@ -1,37 +1,28 @@
-<style>
-  body {
-  margin:0;
-  padding:0;
-  }
-  .date {
-  font-size: 9px;
-  color: #3D352A;
-  }
-</style>
+<%= erb :header, :layout => false %>
 
-<script type="text/javascript">
-  window.onload = function() {
-  document.getElementById("new").focus();
-  };
-</script>
-
-<body>
-  <table border="1">
-    <tr><td><h2><%=h @post.title %></h2>
-
-	<% if @post.image %>
-	<br /><img src="/i/<%= @post.image.uid %>" width="150"/>
-	<% end %>
-
-    </td></tr>
-    <% @post.comments.each do |comment| %>
-    <tr><td><span class="date"><%= comment.nicedate %></span><br /><%=h comment.body %></td></tr>
+<div class="col-lg-6">
+  <h4><a href="/p/<%= @post.uid %>"><%=h @post.title %></a></h4>
+  <p>
+    <% if @post.image %>
+    <div>
+      <a href="<%= @post.image.url %>">
+	<img src="<%= @post.image.url %>" width="300"/>
+      </a>
+    </div>
     <% end %>
-    <form method="POST" action="/p/<%= @post.uid %>">
-      <input type="hidden" name="orig" value="<%= @orig %>" />
-      <tr><td><input id="new" type="text" width="100%" name="body" /><input type="submit" value="Comment" /></td></tr>
-    </form>
-  </table>
-</body>
-<br />
-<a href="/">Home</a>
+
+    <ul>
+      <% @post.comments.each do |comment| %>
+      <li><span class="date"><%= comment.nicedate %></span><br />
+	<%=h comment.body %>
+      </li>
+      <% end %>
+      <form method="POST" action="/p/<%= @post.uid %>">
+	<input type="hidden" name="orig" value="<%= @orig %>" />
+	<tr><td><input id="new" type="text" width="100%" name="body" /><input type="submit" value="Comment" /></td></tr>
+      </form>
+    </ul>
+
+  </p>
+</div>
+<%= erb :footer, :layout => false %>

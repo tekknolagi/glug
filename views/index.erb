@@ -1,45 +1,39 @@
-<style>
-  body {
-  margin:0;
-  padding:0;
-  }
-  .date {
-  font-size: 9px;
-  color: #3D352A;
-  }
-</style>
-
-<body>
-  <form method="POST" action="/new" enctype="multipart/form-data">
-    Post:<br />
-    <input type="text" name="post" />
-    <br />
-    Comment: <br />
-    <input type="text" name="comment" />
-    <br />
-    Image (optional): <br />
-    <input type="file" name="image" />
-    <br />
-    <input type="submit" value="Post" />
+<%= erb :header, :layout => false %>
+<div class="col-lg-6 pull-left">
+  <form class="form-signin" method="POST" action="/new" enctype="multipart/form-data">
+    <h2 class="form-signin-heading">New post</h2>
+    <input type="text" class="form-control" placeholder="Title" autofocus name="post"/>
+    <input type="textarea" class="form-control" placeholder="Comment" name="comment" />
+    <input type="file" class="form-control" name="image" />
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Post</button>
   </form>
+</div>
 
+<div class="col-lg-6">
   <% Post.all(:limit => 10).reverse.each do |post| %>
-  <table border="1" width="500px">
-    <tr><td><h2><a href="/p/<%= post.uid %>"><%=h post.title %></a></h2>
-
-	<% if post.image %>
-	<br /><img src="/i/<%= post.image.uid %>" width="150"/>
-	<% end %>
-
-    </td></tr>
-    <% post.comments.each do |comment| %>
-    <tr><td><span class="date"><%= comment.nicedate %></span><br /><%=h comment.body %></td></tr>
+  <h4><a href="/p/<%= post.uid %>"><%=h post.title %></a></h4>
+  <p>
+    <% if post.image %>
+    <div>
+      <a href="<%= post.image.url %>">
+	<img src="<%= post.image.url %>" width="150"/>
+      </a>
+    </div>
     <% end %>
-    <form method="POST" action="/p/<%= post.uid %>">
-      <input type="hidden" name="orig" value="<%= @orig %>" />
-      <tr><td><input type="text" width="100%" name="body" /><input type="submit" value="Comment" /></td></tr>
-    </form>
-  </table>
-  <br />
-  <% end %>
-</body>
+
+    <ul>
+      <% post.comments.each do |comment| %>
+      <li><span class="date"><%= comment.nicedate %></span><br />
+	<%=h comment.body %>
+      </li>
+      <% end %>
+      <form method="POST" action="/p/<%= post.uid %>">
+	<input type="hidden" name="orig" value="<%= @orig %>" />
+	<tr><td><input id="new" type="text" width="100%" name="body" /><input type="submit" value="Comment" /></td></tr>
+      </form>
+    </ul>
+
+    <% end %>
+  </p>
+</div>
+<%= erb :footer, :layout => false %>
