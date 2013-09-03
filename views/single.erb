@@ -6,7 +6,7 @@
     <% if @post.image %>
     <div>
       <a href="<%= @post.image.url %>">
-	<img src="<%= @post.image.url %>" width="300"/>
+	<img src="<%= @post.image.thumb %>" width="300"/>
       </a>
     </div>
     <% end %>

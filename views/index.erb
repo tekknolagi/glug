@@ -15,8 +15,8 @@
   <p>
     <% if post.image %>
     <div>
-      <a href="<%= post.image.url %>">
-	<img src="<%= post.image.url %>" width="150"/>
+      <a href="/p/<%= post.uid %>">
+	<img src="<%= post.image.thumb %>" width="150"/>
       </a>
     </div>
     <% end %>
