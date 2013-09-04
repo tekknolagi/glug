@@ -33,8 +33,13 @@ class Comment
   property :created_at, DateTime, :default => ->(r, p) { DateTime.now }
   property :admin, Boolean, :default => false
 
+  def to_pst
+    tz = TZInfo::Timezone.get('America/Los_Angeles')
+    tz.utc_to_local(created_at.to_time).to_datetime
+  end
+
   def nicedate
-    created_at.strftime("%I:%M%P on %A %B %d, %Y")
+    to_pst.strftime("%I:%M%P on %A %B %d, %Y")
   end
 
   has 1, :image
