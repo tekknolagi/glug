@@ -31,6 +31,7 @@ class Comment
   property :uid, String, :length => 32, :default => lambda { |r, p| Digest::MD5.hexdigest(r.created_at.to_s+r.body) }
   property :body, Text
   property :created_at, DateTime, :default => ->(r, p) { DateTime.now }
+  property :admin, Boolean, :default => false
 
   def nicedate
     created_at.strftime("%I:%M%P on %A %B %d, %Y")
@@ -125,7 +126,11 @@ class GulagApp < Sinatra::Application
       redirect to(params[:orig] || "/")
     end
     p = Post.new(:title => params[:post])
-    c = Comment.new(:body => params[:comment])
+    if params[:comment][-5..-1] == ENV['GULAG_ADMIN_PASSWORD']
+      c = Comment.new(:body => params[:comment][0...-5], :admin => true)
+    else
+      c = Comment.new(:body => params[:comment])
+    end
     p.comments << c
     if params[:image] && params[:image][:tempfile]
       i = ImageUploader.new
@@ -141,8 +146,12 @@ class GulagApp < Sinatra::Application
     if bad(params[:body])
       redirect to(params[:orig])
     end
+    if params[:body][-5..-1] == ENV['GULAG_ADMIN_PASSWORD']
+      c = Comment.new(:body => params[:body][0...-5], :admin => true)
+    else
+      c = Comment.new(:body => params[:body])
+    end
     @post = Post.first(:uid => params[:uid])
-    c = Comment.create(:body => params[:body])
     @post.comments << c
     c.save
     redirect to(params[:orig])
