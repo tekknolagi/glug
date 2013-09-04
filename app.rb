@@ -4,7 +4,7 @@ require 'carrierwave'
 require 'carrierwave/datamapper'
 require 'cgi'
 require 'base64'
-require 'pry'
+require 'tzinfo'
 
 DataMapper.setup(:default, ENV['HEROKU_POSTGRESQL_NAVY_URL'] || ENV['GULAGRB_POSTGRESQL_URL'])
 
