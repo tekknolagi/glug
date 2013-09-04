@@ -21,7 +21,7 @@
     </div>
     <% end %>
 
-    <ul>
+    <ul class="comments">
       <% post.comments.each do |comment| %>
       <li><span class="date"><%= comment.nicedate %></span><br />
 	<%=h comment.body %>
