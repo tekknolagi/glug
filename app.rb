@@ -113,6 +113,10 @@ class GulagApp < Sinatra::Application
     def bad(content)
       content == nil or content == "" or content.length < 2 or content =~ /^\s*$/
     end
+
+    def tracking_url
+      ENV['GULAG_TRACKING_URL']
+    end
   end
 
   get '/' do
