@@ -41,6 +41,14 @@ end
 
 
 CarrierWave.configure do |config|
+   config.fog_credentials = {
+    :provider           => 'Rackspace',
+    :rackspace_username => ENV['RACKSPACE_USER'],
+    :rackspace_api_key  => ENV['RACKSPACE_API_KEY']
+  }
+  config.fog_directory = ENV['RACKSPACE_CONTAINER']
+  config.asset_host = ENV['RACKSPACE_ASSET_HOST']
+
   config.fog_attributes = {'Cache-Control'=>'max-age=315576000'}
 end
 
@@ -49,6 +57,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   process :set_content_type
+  storage :fog
 
   def store_dir
     "uploads"
