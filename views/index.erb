@@ -10,7 +10,7 @@
 </div>
 
 <div class="col-lg-6">
-  <% Post.all(:limit => 10).reverse.each do |post| %>
+  <% Post.all(:limit => num_posts).reverse.each do |post| %>
   <h4><a href="/p/<%= post.uid %>"><%=h post.title %></a></h4>
   <p>
     <% if post.image %>

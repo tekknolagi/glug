@@ -6,6 +6,8 @@ require 'cgi'
 require 'base64'
 require 'tzinfo'
 
+$num_posts = 15
+
 DataMapper.setup(:default, ENV['HEROKU_POSTGRESQL_NAVY_URL'] || ENV['GULAGRB_POSTGRESQL_URL'])
 
 class Post
@@ -117,6 +119,10 @@ class GulagApp < Sinatra::Application
     def tracking_url
       ENV['GULAG_TRACKING_URL']
     end
+
+    def num_posts
+      $num_posts
+    end
   end
 
   get '/' do
@@ -148,6 +154,11 @@ class GulagApp < Sinatra::Application
       p.save!
     end
     p.save!
+    old_p = Post.all[0-num_posts-1]
+    begin
+      old_p.destroy!
+    rescue
+    end
     redirect to("/p/#{p.uid}")
   end
 
