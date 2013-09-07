@@ -15,12 +15,15 @@
     <ul class="comments">
       <% @post.comments.each do |comment| %>
       <li><%= "ADMIN " if comment.admin %><span class="date"><%= comment.nicedate %></span><br />
-	<%=h comment.body %>
+	<span class="content">
+	  <%=h comment.body %>
+	</span>
       </li>
       <% end %>
       <form method="POST" action="/p/<%= @post.uid %>">
 	<input type="hidden" name="orig" value="<%= @orig %>" />
-	<tr><td><input id="new" type="text" width="100%" name="body" /><input type="submit" value="Comment" /></td></tr>
+	<input id="new" type="text" width="100%" name="body" />
+	<input type="submit" value="Comment" />
       </form>
     </ul>
 
