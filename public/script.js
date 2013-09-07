@@ -12,7 +12,7 @@ $(window).load(function() {
 	    var ext = html.split('.').pop().trim();
 	    var allowed = ["jpg", "jpeg", "png", "gif"];
 	    if (arrayContains(ext, allowed)) {
-		$(this).html(html.replace(urlRegEx, "<img src='$1' height='150px' />"));
+		$(this).html(html.replace(urlRegEx, "<a href='$1' target='_blank'><img src='$1' height='150px' /></a>"));
 	    }
 	    else {
 		$(this).html(html.replace(urlRegEx, "<a href='$1' target='_blank'>$1</a>"));	
