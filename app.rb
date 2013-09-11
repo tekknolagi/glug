@@ -3,7 +3,7 @@ require 'cgi'
 require 'base64'
 require './database'
 
-$num_posts = 15
+$num_posts = 10
 
 class GulagApp < Sinatra::Application
   include FileUtils::Verbose
@@ -70,9 +70,9 @@ class GulagApp < Sinatra::Application
       p.save!
     end
     p.save!
-    old_p = Post.all[0-num_posts-1]
     begin
-      old_p.destroy!
+      # delete old posts
+      Post.all[0-num_posts-1].destroy!
     rescue
     end
     redirect to("/p/#{p.uid}")
