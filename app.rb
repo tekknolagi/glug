@@ -9,11 +9,15 @@ class GulagApp < Sinatra::Application
   include FileUtils::Verbose
 
   helpers do
+    include Rack::Utils
+
     def current_page
       request.path_info
     end
 
-    def h(html)
+    alias_method :h, :escape_html  
+
+    def otherh(html)
       CGI.escapeHTML html
     end
     
