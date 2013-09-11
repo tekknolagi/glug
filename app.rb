@@ -42,7 +42,11 @@ class GulagApp < Sinatra::Application
   get '/p/:uid' do
     @orig = current_page
     @post = Post.first(:uid => params[:uid])
-    erb :single
+    if @post
+      erb :single
+    else
+      erb :notfound
+    end
   end
 
   post '/new' do
