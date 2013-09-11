@@ -2,7 +2,7 @@
 
 <div class="col-lg-6">
   <h4><a href="/p/<%= @post.uid %>"><%=h @post.title %></a></h4>
-  <span class="author">by <%= @post.author || "anonymous" %></span>
+  <span class="author">by <%=h @post.author || "anonymous" %></span>
   <p>
     <% if @post.image %>
     <div>
