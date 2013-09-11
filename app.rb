@@ -18,7 +18,7 @@ class GulagApp < Sinatra::Application
     end
     
     def bad(content)
-      content == nil or content == "" or content.length < 2 or content =~ /^\s*$/
+      content == nil or content == "" or content.length < 2 or content =~ /^\s*$/ or content.length > 999
     end
 
     def tracking_url
@@ -52,9 +52,6 @@ class GulagApp < Sinatra::Application
       params[:author] = params[:author].chomp
     end
 
-    params[:post] = params[:post][0..1000].gsub(/\s\w+\s*$/, '...')
-    params[:comment] = params[:comment][0..1000].gsub(/\s\w+\s*$/, '...')
-
     p = Post.new(:title => params[:post], :author => params[:author])
     if params[:comment][-5..-1] == ENV['GULAG_ADMIN_PASSWORD']
       c = Comment.new(:body => params[:comment][0...-5], :admin => true)
@@ -81,8 +78,6 @@ class GulagApp < Sinatra::Application
     if bad(params[:body])
       redirect to(params[:orig])
     end
-
-    params[:comment] = params[:comment][0..1000].gsub(/\s\w+\s*$/, '...')
 
     if params[:body][-5..-1] == ENV['GULAG_ADMIN_PASSWORD']
       c = Comment.new(:body => params[:body][0...-5], :admin => true)
